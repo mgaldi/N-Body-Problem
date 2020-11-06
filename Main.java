@@ -107,7 +107,6 @@ public class Main  {
                 toUpdate.setYAcc(0);
                 for (CelestialBody body: bodies){
                     if (!toUpdate.equals(body)) {
-                        System.out.println("to update " + toUpdate.getName() + " body " + body.getName());
                         double force = (CelestialBody.G * ( toUpdate.getMass() * body.getMass() / Math.pow(
                                 toUpdate.distanceTo(body), 2)));
                         double forceX = force * ((body.getXCoord() - toUpdate.getXCoord()));///toUpdate.distanceTo(body));
