@@ -50,7 +50,6 @@ public class Main  {
         }
     }
 
-    // @todo
     private static void loadData(URL resource) throws IOException, NumberFormatException {
         try (BufferedReader reader = new BufferedReader(new FileReader(resource.getFile()))) {
             switch (reader.readLine().toLowerCase()) {
