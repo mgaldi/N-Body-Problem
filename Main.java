@@ -43,7 +43,7 @@ public class Main  {
                 Main.updatePosition(bodies);
                 Main.updateVelocity(bodies);
                 frame.repaint();
-            }, 0, 15, TimeUnit.MILLISECONDS);
+            }, 0, 1, TimeUnit.MILLISECONDS);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(frame, e.getMessage(), null, JOptionPane.ERROR_MESSAGE);
             System.exit(-1);
@@ -105,24 +105,27 @@ public class Main  {
             for (CelestialBody toUpdate : bodies) {
                 toUpdate.setXAcc(0);
                 toUpdate.setYAcc(0);
+                double forceX = 0;
+                double forceY = 0;
                 for (CelestialBody body: bodies){
                     if (!toUpdate.equals(body)) {
-                        double force = (CelestialBody.G * ( toUpdate.getMass() * body.getMass() / Math.pow(
-                                toUpdate.distanceTo(body), 2)));
-                        double forceX = force * ((body.getXCoord() - toUpdate.getXCoord()));///toUpdate.distanceTo(body));
-                        double forceY = force * ((body.getYCoord() - toUpdate.getYCoord()));///toUpdate.distanceTo(body));
-                        double accX = (forceX/toUpdate.getMass()) + toUpdate.getXAcc();
-                        double accY = (forceY/toUpdate.getMass()) + toUpdate.getYAcc();
-                        toUpdate.setXAcc(accX);
-                        toUpdate.setYAcc(accY);
+                        double force = (CelestialBody.G * ( toUpdate.getMass() * body.getMass() /(Math.pow(
+                                toUpdate.distanceTo(body), 2))));
+                        forceX += force * ((body.getXCoord() - toUpdate.getXCoord()));///toUpdate.distanceTo(body));
+                        forceY += force * ((body.getYCoord() - toUpdate.getYCoord()));///toUpdate.distanceTo(body));
+
                     }
                 }
+                double accX = (forceX/toUpdate.getMass()) + toUpdate.getXAcc();
+                double accY = (forceY/toUpdate.getMass()) + toUpdate.getYAcc();
+                toUpdate.setXAcc(accX);
+                toUpdate.setYAcc(accY);
             }
         }
         private static void updatePosition(List<CelestialBody> bodies) {
             for (CelestialBody toUpdate : bodies) {
-                toUpdate.setXCoord((int)(toUpdate.getXCoord() + toUpdate.getXAcc() + toUpdate.getXVel()));
-                toUpdate.setYCoord((int)(toUpdate.getYCoord() + toUpdate.getYAcc() + toUpdate.getYVel()));
+                toUpdate.setXCoord(toUpdate.getXCoord() + toUpdate.getXAcc() + toUpdate.getXVel());
+                toUpdate.setYCoord(toUpdate.getYCoord() + toUpdate.getYAcc() + toUpdate.getYVel());
             }
         }
 
@@ -136,6 +139,6 @@ public class Main  {
 
     private static void drawCelestialBody(CelestialBody body, Graphics g) {
         g.setColor(body.getColor());
-        g.fillOval(body.getXCoord(), body.getYCoord(), body.getSize(), body.getSize());
+        g.fillOval((int)body.getXCoord(),(int) body.getYCoord(), body.getSize(), body.getSize());
     }
 }

@@ -8,7 +8,7 @@ public class CelestialBody {
 
     private String name;
     private double mass;
-    private int xCoord, yCoord;
+    private double xCoord, yCoord;
     private double xVel, yVel;
     private double xAcc, yAcc;
     private int size;
@@ -34,20 +34,20 @@ public class CelestialBody {
         return this;
     }
 
-    public int getXCoord() {
+    public double getXCoord() {
         return xCoord;
     }
 
-    public CelestialBody setXCoord(int xCoord) {
+    public CelestialBody setXCoord(double xCoord) {
         this.xCoord = xCoord;
         return this;
     }
 
-    public int getYCoord() {
+    public double getYCoord() {
         return yCoord;
     }
 
-    public CelestialBody setYCoord(int yCoord) {
+    public CelestialBody setYCoord(double yCoord) {
         this.yCoord = yCoord;
         return this;
     }
@@ -106,8 +106,8 @@ public class CelestialBody {
         return this;
     }
     public double distanceTo(CelestialBody body) {
-        double xDist = this.xCoord - body.xCoord;
-        double yDist = this.yCoord - body.yCoord;
+        double xDist = body.xCoord - this.xCoord;
+        double yDist = body.yCoord - this.yCoord;
         return Math.sqrt((xDist * xDist) + (yDist * yDist));
     }
 
